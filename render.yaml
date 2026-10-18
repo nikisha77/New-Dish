@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: new-dish
+    runtime: static
+    buildCommand: echo "New Dish is ready"
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
