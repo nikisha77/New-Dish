@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="New Dish turns leftovers from one kitchen or a whole group into a safe shared recipe with local open-source AI." />
+    <title>New Dish — Make more from what you have</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Fredoka:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css?v=new-dish-4" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="New Dish home">
+        <span class="brand-mark" aria-hidden="true">🍲</span>
+        <span>New <b>Dish</b></span>
+      </a>
+      <div class="topbar-note"><span>●</span> Your ingredients stay on this device</div>
+      <button class="model-status" id="brainButton" type="button">
+        <span class="status-dot"></span><span id="brainLabel">Wake local chef</span>
+      </button>
+    </header>
+
+    <main class="app-shell" id="top">
+      <section class="welcome">
+        <div>
+          <p class="eyebrow">YOUR POCKET COMMUNITY KITCHEN</p>
+          <h1>What’s left becomes<br /><em>your new dish.</em></h1>
+          <p>Add ingredients, protect everyone’s allergies, and let local open-source AI plan one practical meal.</p>
+        </div>
+        <div class="welcome-side">
+          <div class="mascot-bubble"><span>🌶️</span><p>Hi, I’m Peper!<br /><b>Let’s rescue dinner.</b></p></div>
+          <button class="listen-button" id="heroVoice" type="button">▶ Hear how it works</button>
+        </div>
+      </section>
+
+      <div class="workspace">
+        <section class="setup-panel panel" aria-labelledby="setupTitle">
+          <div class="panel-heading">
+            <div><span class="step">1</span><p>MEAL SETUP</p></div>
+            <h2 id="setupTitle">Build tonight’s kitchen</h2>
+          </div>
+
+          <section class="scanner" aria-labelledby="scannerTitle">
+            <div class="scanner-heading">
+              <div><small>PHOTO TO INGREDIENTS</small><h3 id="scannerTitle">Scan a list or your fridge</h3></div>
+              <span class="local-pill" id="scanModelState">Preparing OCR…</span>
+            </div>
+            <div class="scan-modes" role="group" aria-label="Photo type">
+              <button class="active" type="button" data-scan-mode="ocr">🧾 Ingredient label</button>
+              <button type="button" data-scan-mode="fridge">📷 Fridge photo</button>
+            </div>
+            <label class="upload-drop" for="imageInput">
+              <input id="imageInput" type="file" accept="image/*" />
+              <span class="upload-icon">＋</span><span><b>Choose a photo</b><small>JPG, PNG or a camera image</small></span>
+            </label>
+            <div class="scan-preview" id="scanPreview" hidden>
+              <img id="scanImage" alt="Selected ingredient photo preview" />
+              <div><strong id="scanStatus">Ready to scan</strong><small id="scanProgress">Nothing leaves this browser.</small></div>
+              <button id="scanButton" type="button">Scan photo</button>
+            </div>
+            <div class="scan-results" id="scanResults" hidden>
+              <p><b>Confirm suggestions</b><span>Image recognition can be wrong—only add what you see.</span></p>
+              <div id="scanSuggestions"></div>
+              <div class="scan-result-actions">
+                <button id="addScanned" type="button">Add selected to your kitchen</button>
+                <button id="clearScanned" class="secondary" type="button">Clear scanned items</button>
+              </div>
+            </div>
+          </section>
+
+          <div class="meal-counts">
+            <div>
+              <label>Kitchens joining</label>
+              <div class="segmented" id="householdCount" role="group" aria-label="Number of kitchens">
+                <button type="button" data-count="1">1 · Solo</button>
+                <button type="button" data-count="2">2</button>
+                <button type="button" data-count="3" class="active">3</button>
+              </div>
+            </div>
+            <label class="people-control" for="peopleCount"><span>People eating</span><input id="peopleCount" type="number" min="1" max="12" value="6" inputmode="numeric" /></label>
+          </div>
+
+          <div class="kitchen-stack" id="householdGrid">
+            <article class="house-card coral" data-house="You">
+              <div class="house-title"><div class="avatar">🙂</div><div><small>Your kitchen</small><h3>You</h3></div><span class="ready">Ready</span></div>
+              <div class="ingredient-list" aria-label="Your ingredients">
+                <button class="ingredient" data-name="tomatoes">🍅 <span>Tomatoes</span><b>×</b></button>
+                <button class="ingredient" data-name="rice">🍚 <span>Cooked rice</span><b>×</b></button>
+                <button class="ingredient" data-name="half an onion">🧅 <span>½ onion</span><b>×</b></button>
+              </div>
+              <form class="add-form"><input aria-label="Add your ingredient" placeholder="Add an ingredient…" maxlength="32" /><button type="submit" aria-label="Add ingredient">+</button></form>
+            </article>
+
+            <article class="house-card mint" data-house="Mira">
+              <div class="house-title"><div class="avatar">👩🏽</div><div class="neighbor-identity"><small>Neighbor 1</small><input class="neighbor-name" value="Mira" maxlength="24" aria-label="First neighbor's name" autocomplete="off" /></div><span class="ready">Ready</span></div>
+              <div class="ingredient-list" aria-label="Mira's ingredients">
+                <button class="ingredient" data-name="spinach">🥬 <span>Spinach</span><b>×</b></button>
+                <button class="ingredient" data-name="chickpeas">🫘 <span>Chickpeas</span><b>×</b></button>
+                <button class="ingredient" data-name="lemon">🍋 <span>1 lemon</span><b>×</b></button>
+              </div>
+              <form class="add-form"><input aria-label="Add Mira's ingredient" placeholder="Add an ingredient…" maxlength="32" /><button type="submit" aria-label="Add ingredient">+</button></form>
+            </article>
+
+            <article class="house-card yellow" data-house="Arjun">
+              <div class="house-title"><div class="avatar">🧔🏾</div><div class="neighbor-identity"><small>Neighbor 2</small><input class="neighbor-name" value="Arjun" maxlength="24" aria-label="Second neighbor's name" autocomplete="off" /></div><span class="ready">Ready</span></div>
+              <div class="ingredient-list" aria-label="Arjun's ingredients">
+                <button class="ingredient" data-name="carrots">🥕 <span>Carrots</span><b>×</b></button>
+                <button class="ingredient" data-name="yogurt">🥣 <span>Yogurt</span><b>×</b></button>
+                <button class="ingredient" data-name="coriander">🌿 <span>Coriander</span><b>×</b></button>
+              </div>
+              <form class="add-form"><input aria-label="Add Arjun's ingredient" placeholder="Add an ingredient…" maxlength="32" /><button type="submit" aria-label="Add ingredient">+</button></form>
+            </article>
+          </div>
+
+          <div class="pot-path" aria-hidden="true"><span></span><span></span><span></span></div>
+
+          <div class="promise-block">
+            <div class="section-label"><span class="step">2</span><div><p>GROUP PROMISES</p><h3>Preferences & allergies</h3></div></div>
+            <div class="preference-controls">
+              <div class="choice-group">
+                <small>Cooking preferences</small>
+                <div>
+                  <label><input type="checkbox" value="vegetarian" data-kind="preference" checked /><span>🥕 Vegetarian</span></label>
+                  <label><input type="checkbox" value="vegan" data-kind="preference" /><span>🌱 Vegan</span></label>
+                  <label><input type="checkbox" value="gluten-free" data-kind="preference" /><span>🌾 Gluten-free</span></label>
+                  <label><input type="checkbox" value="dairy-free" data-kind="preference" /><span>🥛 Dairy-free</span></label>
+                  <label><input type="checkbox" value="easy" data-kind="preference" /><span>👌 Easy only</span></label>
+                  <label><input type="checkbox" value="high-protein" data-kind="preference" /><span>💪 High protein</span></label>
+                  <label><input type="checkbox" value="mild spice" data-kind="preference" /><span>🌶 Mild</span></label>
+                  <label><input type="checkbox" value="under-30" data-kind="preference" checked /><span>⏱ Under 30 min</span></label>
+                  <label><input type="checkbox" value="under-45" data-kind="preference" /><span>⏱ Under 45 min</span></label>
+                </div>
+              </div>
+              <details>
+                <summary>Allergy exclusions <b>Choose for the whole group</b></summary>
+                <div class="allergy-grid">
+                  <label><input type="checkbox" value="peanuts" data-kind="allergy" /><span>Peanuts</span></label>
+                  <label><input type="checkbox" value="tree nuts" data-kind="allergy" /><span>Tree nuts</span></label>
+                  <label><input type="checkbox" value="dairy" data-kind="allergy" /><span>Dairy</span></label>
+                  <label><input type="checkbox" value="eggs" data-kind="allergy" /><span>Eggs</span></label>
+                  <label><input type="checkbox" value="gluten" data-kind="allergy" /><span>Gluten</span></label>
+                  <label><input type="checkbox" value="soy" data-kind="allergy" /><span>Soy</span></label>
+                  <label><input type="checkbox" value="fish" data-kind="allergy" /><span>Fish</span></label>
+                  <label><input type="checkbox" value="shellfish" data-kind="allergy" /><span>Shellfish</span></label>
+                  <label><input type="checkbox" value="sesame" data-kind="allergy" /><span>Sesame</span></label>
+                  <label><input type="checkbox" value="mustard" data-kind="allergy" /><span>Mustard</span></label>
+                  <label><input type="checkbox" value="celery" data-kind="allergy" /><span>Celery</span></label>
+                  <label><input type="checkbox" value="lupin" data-kind="allergy" /><span>Lupin</span></label>
+                  <label><input type="checkbox" value="sulphites" data-kind="allergy" /><span>Sulphites</span></label>
+                </div>
+              </details>
+            </div>
+            <p class="safety-note" id="safetyNote">No group allergens selected. Always check labels and cross-contact before serving.</p>
+          </div>
+
+          <button class="cook-button" id="cookButton" type="button">
+            <span class="cook-icon">✨</span><span><small>Mix all three kitchens</small>Create our new dish</span><b>→</b>
+          </button>
+        </section>
+
+        <section class="recipe-card panel" id="recipe" aria-labelledby="recipeTitle">
+          <div class="result-top">
+            <div><span class="step">3</span><p>PEPER’S VERIFIED PICK</p></div>
+            <div class="peper" id="peperAvatar" aria-label="Peper, the animated cooking guide"><i></i><span class="peper-eye left"></span><span class="peper-eye right"></span><span class="peper-mouth"></span><b>🌿</b></div>
+          </div>
+          <h2 id="recipeTitle">Sunshine neighbor rice bowls</h2>
+          <p class="recipe-tagline" id="recipeTagline">Golden chickpeas, lemony greens, crunchy carrots, and a cool yogurt swirl.</p>
+          <div class="recipe-meta"><span id="servings">🍽 Serves 6</span><span id="time">⏱ 28 minutes</span><span id="leftoverCount">♻️ 9 leftovers</span></div>
+
+          <figure class="dish-visual" id="dishVisual">
+            <img id="dishImage" alt="Recipe dish" />
+            <figcaption id="dishCaption">A licensed photo appears with the verified recipe.</figcaption>
+          </figure>
+
+          <div class="verified-strip"><span>✓</span><p><b>Verified recipe record</b><small id="recipeSource">Method and nutrition come from the open UniTools recipe dataset—not from the language model.</small></p></div>
+
+          <div class="ingredient-columns">
+            <div class="recipe-block"><h3>Ingredients for your servings</h3><ul id="recipeIngredients"></ul></div>
+            <div class="recipe-block missing-block"><h3>You’ll also need</h3><ul id="missingIngredients"></ul></div>
+          </div>
+
+          <div class="recipe-block">
+            <h3>How to make it</h3>
+            <ol id="recipeSteps">
+              <li><b>Step 1</b><span>Warm the rice with a splash of water while the carrots and onion soften.</span></li>
+              <li><b>Step 2</b><span>Add chickpeas, tomatoes, spinach, and mild spices. Fold until bright and cozy.</span></li>
+              <li><b>Step 3</b><span>Finish with lemon and coriander, then spoon over rice with yogurt.</span></li>
+            </ol>
+          </div>
+
+          <div class="compact-grid">
+            <div class="info-box">
+              <h3>Who brings what</h3>
+              <p id="sharePlan"><span><b>You</b>Bring the rice base.</span><span><b>Mira</b>Bring the green chickpea topping.</span><span><b>Arjun</b>Bring the carrot crunch and yogurt.</span></p>
+            </div>
+            <div class="info-box">
+              <h3>Rescued ingredients</h3>
+              <div id="usedIngredients" class="used-chips"><span>Tomatoes</span><span>Rice</span><span>Onion</span><span>Spinach</span><span>Chickpeas</span><span>Lemon</span><span>Carrots</span><span>Yogurt</span><span>Coriander</span></div>
+            </div>
+          </div>
+
+          <div class="nutrition-box">
+            <div class="nutrition-heading"><div><small>Dataset value · per serving</small><h3>Nutrition</h3></div><strong id="calories">— kcal</strong></div>
+            <dl id="nutritionGrid">
+              <div><dt>Protein</dt><dd data-nutrient="protein">9.6 g</dd></div>
+              <div><dt>Carbs</dt><dd data-nutrient="carbs">39 g</dd></div>
+              <div><dt>Total fat</dt><dd data-nutrient="fat">3.3 g</dd></div>
+            </dl>
+            <p id="nutritionNote">Only source-provided values are shown. Real values vary by brands and exact quantities; this is not medical advice.</p>
+          </div>
+
+          <div class="recipe-actions">
+            <button class="action-button primary" id="voiceButton" type="button"><span>🔊</span><span id="voiceLabel">Hear Peper read it</span></button>
+            <button class="action-button" id="copyButton" type="button">Copy recipe</button>
+          </div>
+
+          <div class="model-dock">
+            <div class="model-intro"><span>🔒</span><p><b>Private by design</b><small>Open models run in your browser</small></p></div>
+            <button class="model-card" id="modelCard" type="button"><span>🧠</span><div><small>Optional wording helper</small><strong>SmolLM2 → Qwen2.5</strong><em id="modelState">Fallback ready to load</em></div></button>
+            <button class="model-card" id="voiceCard" type="button"><span>🎙</span><div><small>Natural voice</small><strong>Kokoro 82M</strong><em id="voiceState">Preparing automatically…</em></div></button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer><span>🍲 New Dish</span><p>Cook what you have. Waste a little less.</p><small>Open models · local inference · no recipe uploads</small></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./app.js?v=new-dish-5"></script>
+  </body>
+</html>
