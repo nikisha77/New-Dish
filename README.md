@@ -20,6 +20,4 @@ python3 -m http.server 4173 --directory dist
 
 Then open <http://127.0.0.1:4173>.
 
-## Render
 
-This repository includes a `render.yaml` Blueprint for a Render Static Site. The publish directory is `dist`; no server or secret is required.
